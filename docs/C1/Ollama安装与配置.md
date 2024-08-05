@@ -1,0 +1,77 @@
+# Ollama安装与配置
+
+## macOS
+
+macOS中可以通过Homebrew进行安装。
+
+1. 安装Homebrew：
+
+打开终端输入以下命令：
+
+```shell
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+2. 安装Ollama：
+
+```shell
+brew install ollama
+```
+
+3. 验证安装：
+
+```shell
+ollama --version
+```
+
+## Windows
+
+ollama window preview版本相比于其他版本并不稳定，[Ollama window下载](https://ollama.com/download)
+
+Ollama安装过后，请配置环境变量：
+
+**OLLAMA_MODELS**：模型文件存放目录，默认目录为当前用户目录（Windows 目录：C:\Users%username%.ollama\models，MacOS 目录：~/.ollama/models，Linux 目录：/usr/share/ollama/.ollama/models），如果是 Windows 系统建议修改（如：D:\OllamaModels），避免 C 盘空间吃紧
+
+**OLLAMA_HOST**：Ollama 服务监听的网络地址，默认为127.0.0.1，如果允许其他电脑访问 Ollama（如：局域网中的其他电脑），建议设置成0.0.0.0，从而允许其他网络访问
+
+**OLLAMA_PORT**：Ollama 服务监听的默认端口，默认为11434，如果端口有冲突，可以修改设置成其他端口（如：8080等）
+
+**OLLAMA_ORIGINS**：HTTP 客户端请求来源，半角逗号分隔列表，若本地使用无严格要求，可以设置成星号，代表不受限制
+
+**OLLAMA_KEEP_ALIVE**：大模型加载到内存中后的存活时间，默认为5m即 5 分钟（如：纯数字如 300 代表 300 秒，0 代表处理请求响应后立即卸载模型，任何负数则表示一直存活）；我们可设置成24h，即模型在内存中保持 24 小时，提高访问速度
+
+**OLLAMA_NUM_PARALLEL**：请求处理并发数量，默认为1，即单并发串行处理请求，可根据实际情况进行调整
+
+**OLLAMA_MAX_QUEUE**：请求队列长度，默认值为512，可以根据情况设置，超过队列长度请求被抛弃
+
+**OLLAMA_DEBUG**：输出 Debug 日志标识，应用研发阶段可以设置成1，即输出详细日志信息，便于排查问题
+
+**OLLAMA_MAX_LOADED_MODELS**：最多同时加载到内存中模型的数量，默认为1，即只能有 1 个模型在内存中
+
+​
+首先，把启动着的ollama关闭，然后在用户环境变量中点击新建环境变量
+
+![](https://img-blog.csdnimg.cn/img_convert/53049a01a7ccf219d4a04646ecc2b29b.png)
+
+OLLAMA_MODELS的值为你希望模型所在的地址。
+
+OLLAMA_ORIGINS = "*"
+
+设置后需要重启ollama服务和vscode
+>ollama版本需要>0.2.0
+
+ 你可以通过在终端中输入ollama -v来检查你的版本
+
+启动ollama服务ollama serve
+
+再打开一个新的终端，在终端输入ollama run codegeex4
+
+在本地模式中配置接口地址
+
+在插件的配置页配置模型地址http://localhost:11434/v1/chat/completions
+
+打开模型高级模式，在模型名称栏中填写：codegeex4
+
+## Linux
+
+## Docker
